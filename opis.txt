@@ -1,0 +1,22 @@
+- deploy:
+    - 1 S3 bucket
+        services->Amazon S3->forma za kreiranje bucketa
+    - 2 IAM user
+        - "lin-read" and "lin-write"
+            services->IAM->kreiranje usera
+    - 2 Linux VMs in Vagrant (locally)
+        - hostnames "lin-read" and "lin-write"
+            https://medium.com/@JohnFoderaro/how-to-set-up-a-local-linux-environment-with-vagrant-163f0ba4da77
+            https://www.vagrantup.com/docs/multi-machine
+            https://app.vagrantup.com/boxes/search
+            https://www.vagrantup.com/docs/cli/init
+
+- configuration:
+    - using ansible, install and configure nginx and aws-cli on the VMs
+    - configure nginx to listen on port 8999 (http) and serves static files
+    - configure nginx to return a custom header "X-Infobip: cloud-test" on each HTTP response
+    - grant access to a created S3 bucket to those IAM users
+    - read-only for "lin-read" VM and read-write access to "lin-write" VM
+    - write 2 bash scripts and set them to run every hour and 14 minutes
+    - on "lin-read" script should pull/sync all the files from S3 bucket
+    - on "lin-write" script should generate a dummy file with the timestamp and upload it to S3 bucket

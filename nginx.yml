@@ -1,0 +1,60 @@
+---
+- name: Install nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Add epel-release repo
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Copy website files to the server's document root
+        copy:
+          src: "index.html"
+          dest: "/var/www/html"
+          mode: preserve
+
+    - name: Apply Nginx template
+      template:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/default
+            notify: Restart Nginx
+
+          - name: Enable new site
+            file:
+              src: /etc/nginx/sites-available/default
+              dest: /etc/nginx/sites-enabled/default
+              state: link
+            notify: Restart Nginx
+
+          - name: Allow all access to tcp port 80
+            ufw:
+              rule: allow
+              port: '80'
+              proto: tcp
+
+    handlers:
+      - name: Restart Nginx
+        service:
+          name: nginx
+          state: restarted
+    #- name: Insert configuration file
+    #  template:
+    #    src: nginx.conf
+    #    dest: /etc/nginx/nginx.conf
+
+    #- name: Insert Index Page
+    #  template:
+    #    src: index.html
+    #    dest: /usr/share/nginx/html/index.html
+
+    #- name: Start NGiNX
+    #  service:
+    #    name: nginx
+    #    state: started

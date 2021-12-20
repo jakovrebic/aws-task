@@ -13,6 +13,10 @@
 
 - configuration:
     - using ansible, install and configure nginx and aws-cli on the VMs
+        konfiguracija ssh ključeva
+        2 playbook-a
+        izvođenje
+        https://github.com/arbabnazar/ansible-roles.git
     - configure nginx to listen on port 8999 (http) and serves static files
     - configure nginx to return a custom header "X-Infobip: cloud-test" on each HTTP response
     - grant access to a created S3 bucket to those IAM users

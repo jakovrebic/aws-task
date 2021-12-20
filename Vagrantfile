@@ -13,16 +13,26 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
 
+  config.vm.box_check_update = "false"
+
   config.vm.define "vm1" do |vm1|
     vm1.vm.box = "centos/7"
     vm1.vm.hostname = "lin-read"
-    vm1.vm.network "private_network", ip: "192.168.56.10" 
+    vm1.vm.network "private_network", ip: "192.168.56.10"
+    vm1.vm.provision "ansible" do |ansible|
+        ansible.playbook = "nginx.yml"
+    end
   end
   config.vm.define "vm2" do |vm2|
     vm2.vm.box = "centos/7"
     vm2.vm.hostname = "lin-write"
     vm2.vm.network "private_network", ip: "192.168.56.11"
+    vm2.vm.provision "ansible" do |ansible|
+            ansible.playbook = "nginx.yml"
+    end
   end
+
+
 
   # Disable automat box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

@@ -1,0 +1,16 @@
+---
+- name: Install aws-cli
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Ensure pip is installed
+      yum:
+        name: python-pip
+        update_cache: yes
+        state: latest
+
+    - name: pip install awscli
+      pip:
+        name: awscli
+        state: latest

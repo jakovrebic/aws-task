@@ -16,13 +16,15 @@ Vagrant.configure("2") do |config|
   config.vm.define "vm1" do |vm1|
     vm1.vm.box = "centos/7"
     vm1.vm.hostname = "lin-read"
+    vm1.vm.network "private_network", ip: "192.168.56.10" 
   end
   config.vm.define "vm2" do |vm2|
     vm2.vm.box = "centos/7"
     vm2.vm.hostname = "lin-write"
+    vm2.vm.network "private_network", ip: "192.168.56.11"
   end
 
-  # Disable automatic box update checking. If you disable this, then
+  # Disable automat box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
   # config.vm.box_check_update = false
@@ -40,7 +42,6 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on

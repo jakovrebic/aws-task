@@ -15,35 +15,35 @@
         state: present
 
     - name: Copy website files to the server's document root
-        copy:
-          src: "index.html"
-          dest: "/var/www/html"
-          mode: preserve
+      copy:
+        src: "index.html"
+        dest: "/var/www/html"
+        mode: preserve
 
     - name: Apply Nginx template
       template:
         src: nginx.conf
         dest: /etc/nginx/sites-available/default
-            notify: Restart Nginx
+      notify: Restart Nginx
 
-          - name: Enable new site
-            file:
-              src: /etc/nginx/sites-available/default
-              dest: /etc/nginx/sites-enabled/default
-              state: link
-            notify: Restart Nginx
+    - name: Enable new site
+      file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+      notify: Restart Nginx
 
-          - name: Allow all access to tcp port 80
-            ufw:
-              rule: allow
-              port: '80'
-              proto: tcp
+    #- name: Allow all access to tcp port 8999
+    #  ufw:
+    #    rule: allow
+    #    port: '8999'
+    #    proto: tcp
 
-    handlers:
-      - name: Restart Nginx
-        service:
-          name: nginx
-          state: restarted
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
     #- name: Insert configuration file
     #  template:
     #    src: nginx.conf

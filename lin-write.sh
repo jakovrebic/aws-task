@@ -8,9 +8,9 @@ now_time=$(date +"%H%M%S")
 contentType="application/x-compressed-tar"
 dateValue=`date -R`
 # your key goes here..
-s3Key=AKIAWQEOCFWY224LOMFA
+s3Key=
 # your secrets goes here..
-s3Secret=wu78rgdkjrhhdbcoUed+Xm1chCytUTiVeyOUDFJE
+s3Secret=
 
 function pushToS3()
 {
